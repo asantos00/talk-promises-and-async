@@ -88,10 +88,7 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "import/no-webpack-loader-syntax": "off"
-    }
+    "extends": "react-app"
   },
   "devDependencies": {
     "raw-loader": "^0.5.1"
