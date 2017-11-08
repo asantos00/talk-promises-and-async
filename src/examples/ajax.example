@@ -1,0 +1,3 @@
+ajax('core.uniplaces.com', (err, data) => {
+  /* blablabla */
+})

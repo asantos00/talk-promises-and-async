@@ -107,9 +107,31 @@ export default class Presentation extends React.Component {
         
         <CodeSlide 
           lang="js"
-          code={require("raw-loader!../ajax.example")}
+          transition={[]}
+          textSize={25}
+          code={require('./examples/ajax.example')}
           ranges={[
-            { loc: [0, 10], title: "doin' an ajax request" }
+            { loc: [0, 1], title: "doin' an ajax request" },
+            {
+              loc: [1, 3],
+              title: "handling it **later**",
+              note: "Yeah, it is possible to do synchronous ajax requests, but it sucks and I'm gonna explain why in a minute"
+            }
+          ]}
+        />
+        
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/later.example')}
+          ranges={[
+            { loc: [0, 1], title: "doin' an ajax request" },
+            {
+              loc: [1, 3],
+              title: "handling it **later**",
+              note: "Yeah, it is possible to do synchronous ajax requests, but it sucks and I'm gonna explain why in a minute"
+            }
           ]}
         />
       </Deck>
