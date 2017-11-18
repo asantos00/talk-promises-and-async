@@ -1,3 +1,0 @@
-console.log('now')
-console.log(setTimeout(function() { console.log('at some time') }, 0))
-console.log('later')

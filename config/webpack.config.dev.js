@@ -103,10 +103,6 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      {
-        test: /\.txt$/,
-        use: 'raw-loader'
-      },
       // TODO: Disable require.ensure as it's not a standard language feature.
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
@@ -133,6 +129,10 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
+          {
+              test: /\.example?$/,
+              loader: require.resolve('raw-loader')
+          },
           // "url" loader works like "file" loader except that it embeds assets
           // smaller than specified limit in bytes as data URLs to avoid requests.
           // A missing `test` is equivalent to a match.
