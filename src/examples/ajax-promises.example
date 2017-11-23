@@ -1,0 +1,15 @@
+ajax('https://bla', (err, auth) => {
+    ajax('http://blabla', (err, guest) => {
+        ajax('http://blablabla', (err, payment) => {
+            redirectToSuccessPage()
+        })
+    })
+})
+
+
+
+
+promisifiedAjax('https://bla')
+    .then((auth) => promisifiedAjax('https://bla'))
+    .then((guest) => promisifiedAjax('https://blabla'))
+    .then((payment) => promisifiedAjax('https://blablabla'))

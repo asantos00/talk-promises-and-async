@@ -1,3 +1,5 @@
-ajax('core.uniplaces.com', (err, data) => {
-  /* blablabla */
-})
+ajax("https://core.staging.uniplaces/api/guests",
+    data => {
+      // deal with the response
+    }
+);

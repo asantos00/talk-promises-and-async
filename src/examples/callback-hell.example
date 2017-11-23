@@ -1,0 +1,7 @@
+ajax('https://bla', (err, auth) => {
+    ajax('http://blabla', (err, guest) => {
+        ajax('http://blablabla', (err, payment) => {
+            redirectToSuccessPage()
+        })
+    })
+})

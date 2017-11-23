@@ -1,0 +1,3 @@
+posts = posts.map(post => {
+   post.timestamp = moment(post.timestamp).add(1, 'day')
+})

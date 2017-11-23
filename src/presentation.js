@@ -4,18 +4,14 @@ import CodeSlide from 'spectacle-code-slide';
 
 // Import Spectacle Core tags
 import {
-  BlockQuote,
-  Cite,
   Deck,
   Appear,
+  Slide,
   Image,
-  Heading,
-  CodePane,
   Notes,
+  Heading,
   ListItem,
   List,
-  Quote,
-  Slide,
   Text
 } from "spectacle";
 
@@ -77,63 +73,502 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide transition={["zoom"]} bgColor="primary">
-          <Appear order={0}>
+          <Appear >
             <Heading size={4} fit lineHeight={1} textColor="clear">
-              now vs later
+              what is executed now
             </Heading>
           </Appear>
-          <Appear order={0}>
+          <Appear >
+            <Heading size={4} fit lineHeight={1} textColor="clear">
+              what is executed later?
+            </Heading>
+          </Appear>
+          <Appear >
             <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
-              <ListItem>execute one chunk at a time</ListItem>
-              <ListItem>later is not after now</ListItem>
+              <ListItem>programs are executed in chunks</ListItem>
+              <ListItem>only execute one chunk at the time (run to completion)</ListItem>
             </List> 
           </Appear>
           <Notes>
-            <h2>execute one chunk at a time</h2>
-            <p>One part of the program run now, others run later</p>
-            <p>The most common used chunk is a function</p>
-
-            <h2>later is not after now</h2>
-            <p>Running later is not strictly immediately after now</p>
-            <p>Tasks that can't complete now will complete asynchronously</p>
           </Notes>
         </Slide>
-
-        <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={4} fit lineHeight={1} textColor="clear">
-            the most common use of async
-          </Heading>
-        </Slide>
-        
         <CodeSlide 
           lang="js"
           transition={[]}
           textSize={25}
           code={require('./examples/ajax.example')}
           ranges={[
-            { loc: [0, 1], title: "doin' an ajax request" },
+            { loc: [0, 1], title: "now" },
             {
-              loc: [1, 3],
-              title: "handling it **later**",
-              note: "Yeah, it is possible to do synchronous ajax requests, but it sucks and I'm gonna explain why in a minute"
+              loc: [1, 4],
+              title: "later",
+              note: "yeah, it is possible to do sync ajax request. hopefully at the end at the talk you'll understand why you shouldn't"
             }
           ]}
         />
-        
         <CodeSlide 
           lang="js"
           transition={[]}
           textSize={25}
-          code={require('./examples/later.example')}
+          code={require('./examples/setTimeoutNowLater.example')}
           ranges={[
-            { loc: [0, 1], title: "doin' an ajax request" },
+            { loc: [0, 12], title: "now vs later" },
             {
-              loc: [1, 3],
-              title: "handling it **later**",
-              note: "Yeah, it is possible to do synchronous ajax requests, but it sucks and I'm gonna explain why in a minute"
+              loc: [0, 5],
+              title: "now"
+            },
+            {
+              loc: [8, 11],
+              title: "now"
+            },
+            {
+              loc: [5, 7],
+              title: "later (after 1000ms passed)"
             }
           ]}
         />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            the event loop
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            { /* TODO: brief introduction of what is the event loop */ }
+            <Appear>
+              <ListItem>javascript runs within an hoisting environment (browser, node, ...)</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem><span role="img" aria-label="warning">⚠️ </span> javascript had no builtin asynchrony until ES6</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>event loop has no notion of time</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>hoisting environment schedules code executions</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>an item "in the loop" is a chunk of code</ListItem>
+            </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            example: doing an ajax request
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>program tries to do an ajax request, with a callback</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>js engine delegates the request to the environment</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>when the ajax finishes, it **calls javascript back** (by inserting the callback code "in the loop")</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>as soon as the callback code "gets is chance", it executes</ListItem>
+            </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/event-loop.example')}
+          ranges={[
+            { loc: [0, 1], title: "dummy event loop implementation" },
+            { loc: [0, 1], title: "an array of 'chunks' to execute" },
+            { loc: [4, 5], title: "looping forever" },
+            { loc: [6, 18], title: "executing tasks" },
+          ]}
+        />
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/set-timeout.example')}
+          ranges={[
+            { 
+              loc: [0, 1],
+              title: "explaining setTimeout",
+              note: "it is defined by the env (not in JS spec, it's a native browser api)"
+            },
+            { 
+              loc: [0, 3],
+              title: "it doesn't put the callback on the loop" 
+            },
+            { 
+              loc: [0, 3],
+              title: "just waits for 1000ms before putting it there" ,
+              note: `
+                this is why 'js has no notion of async'. 
+                It just executes the code.
+                If the code gets there asynchronously, thats another thing
+              `
+            },
+            { 
+              loc: [0, 3],
+              title: "setTimeout time accuracy" ,
+              note: `
+                This is because the code is added to the end of the loop.
+                The loop will execute all the other tasks.
+                Until it gets to the callback code chunk.
+              `
+            },
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            async !== parallel
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>javascripts is fully asynchronous. But the event loop executes one thing at the time</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>async is the gap between now and later</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>parallel is executing more than one thing at the same time</ListItem>
+            </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            blocking the event loop
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>if you have a task that executes for too long, it will block the event loop</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>image that one task does synchronous heavy processing</ListItem>
+            </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/sync-loop.example')}
+          ranges={[
+            { 
+              loc: [0, 3],
+              title: "looping through 100000 posts",
+              note: "this will block the event loop (and consequently, every js code in the browser)"
+            }
+          ]}
+        />
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/async-loop.example')}
+          ranges={[
+            { 
+              loc: [0, 5],
+              title: "a node/async way",
+              note: "proccesing chunks"
+            },
+            { 
+              loc: [6, 9],
+              title: "process a chunk at the time",
+              note: "and concat to the main array"
+            },
+            { 
+              loc: [10, 12],
+              title: "if there are more to process, call itself",
+              note: "add the *processing* to the end of the loop with setTimeout(cb, 0)"
+            },
+            { 
+              loc: [10, 12],
+              title: "why this is the better way?",
+              note: "we let the browser execute whatever is in the loop between chunks"
+            },
+            { 
+              loc: [9, 12],
+              title: "note: in node you would use process.nextTick",
+              note: "it is actually the *same* but without tricks"
+            }
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            ES6 introduces *real asynchrony*
+          </Heading>
+          <Heading size={6} lineHeight={1} textColor="clear">
+            and promises
+          </Heading>
+          <Appear>
+            <Heading size={6} fit lineHeight={6} textColor="clear">
+              let's get back to our dummy event loop
+            </Heading>
+          </Appear>
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/event-loop-job.example')}
+          ranges={[
+            { 
+              loc: [0, 10],
+              title: "the same dummy event loop",
+              note: "proccesing chunks"
+            },
+            { 
+              loc: [18, 19],
+              title: "with a difference - the job queue",
+              note: "the job queue executes at the end of every *tick* (every iteration of the loop)"
+            },
+            { 
+              loc: [18, 19],
+              title: "what does this mean?",
+              note: "we can now run a chunk of code *immediately* after other chunk"
+            },
+            { 
+              loc: [18, 19],
+              title: "run this *then* that",
+              note: "i promise this is how it works *pun intended*"
+            },
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            the job queue
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>"execute this later, but as soon as you can"</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>a job can add other jobs to the queue</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>it only exits when there are no more jobs to execute</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>it is not possible (yet) for a developer to interact directly with the job queue</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>explaining it with dummy code **agaaaain**</ListItem>
+            </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/schedule.example')}
+          ranges={[
+            { 
+              loc: [0, 1],
+              title: "chunk of code, added to the loop",
+            },
+            { 
+              loc: [2, 5],
+              title: "*add to the end of the loop*",
+            },
+            { 
+              loc: [7, 14],
+              title: "fake schedule (emulate job queue)"
+            },
+            { 
+              loc: [7, 14],
+              title: "how does this runs?",
+            },
+            { 
+              loc: [0, 1],
+              title: "the first thing is",
+            },
+            { 
+              loc: [7, 10],
+              title: "after a tick, runs the job queue",
+            },
+            { 
+              loc: [10, 13],
+              title: "job schedules job ",
+              note: "jobQueue only exits after running all jobs"
+            },
+            { 
+              loc: [2, 5],
+              title: "runs the next item on the loop",
+            },
+            { 
+              loc: [2, 5],
+              title: "ACDB is printed",
+            }
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            callbacks, why?
+          </Heading>
+          <Appear>
+            <Heading size={4} fit lineHeight={1} textColor="clear">
+              not
+            </Heading>
+          </Appear>
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/callback-hell.example')}
+          ranges={[
+            { 
+              loc: [0, 1],
+              title: "do an ajax call",
+            },
+            { 
+              loc: [1, 2],
+              title: "then do another",
+            },
+            { 
+              loc: [2, 3],
+              title: "then do another",
+            },
+            { 
+              loc: [3, 4],
+              title: "then do something",
+            },
+            { 
+              loc: [0, 7],
+              title: "callback hell!!!",
+            }
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            problems callbacks have
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>lack of trustability</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>lack of readability</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>lack of sequentiability</ListItem>
+            </Appear>
+          </List> 
+          <Appear>
+            <Heading size={4} fit lineHeight={1} textColor="clear">
+              - being callbacks :troll:
+            </Heading>
+          </Appear>
+          <Notes>
+          </Notes>
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={5} lineHeight={1} textColor="clear">
+            introducing
+          </Heading>
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            promises
+          </Heading>
+          <Appear>
+            <Heading size={5} lineHeight={1} textColor="clear">
+              finally!!
+            </Heading>
+          </Appear>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>promises are future values</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>their API is so intuitive it makes some people use them without understanding</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>why are they so cool? They solve the listed callbacks problems</ListItem>
+            </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Appear>
+            <Heading size={5} lineHeight={1} textColor="clear">
+              no shit sherlock...
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={4} fit lineHeight={1} textColor="clear">
+              i know what promises are
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={5} lineHeight={1} textColor="clear">
+              tell me something usefull
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={5} fit lineHeight={1} textColor="clear">
+              let's cooooode again
+            </Heading>
+          </Appear>
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/ajax-promises.example')}
+          ranges={[
+            { 
+              loc: [0, 8],
+              title: "old ajax implementation",
+            },
+            { 
+              loc: [11, 15],
+              title: "with promises",
+            },
+            { 
+              loc: [11, 15],
+              title: "much simpler, bruh",
+            },
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} lineHeight={1} textColor="clear">
+            what about the other problems?
+          </Heading>
+          <Notes>
+          </Notes>
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            lack of trust
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>called too early or too late</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>called too few or too many times</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>called with wrong parameters and/or context</ListItem>
+            </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
       </Deck>
     );
   }

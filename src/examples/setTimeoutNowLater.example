@@ -1,0 +1,11 @@
+let number
+
+const now = () => 10
+
+const later = () => {
+  number =  number * 2
+}
+
+number = now()
+
+setTimeout(later, 1000)
