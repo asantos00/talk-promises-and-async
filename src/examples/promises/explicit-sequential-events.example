@@ -1,4 +1,4 @@
-promisifiedAjax('https://bla')
-    .then(() => promisifiedAjax('https://blabla'))
+ajax('https://bla')
+    .then(() => ajax('https://blabla'))
     .then(redirect)
 
