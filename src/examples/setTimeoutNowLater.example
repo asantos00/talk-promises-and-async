@@ -1,8 +1,8 @@
-let number
+var number
 
-const now = () => 10
+function now() { return 10 }
 
-const later = () => {
+function later() {
   number =  number * 2
 }
 

@@ -38,11 +38,11 @@ export default class Presentation extends React.Component {
     return (
       <Deck progress="number" transition={["zoom", "slide"]} transitionDuration={500} theme={theme}>
         <Slide transition={["zoom"]} bgColor="clear">
-          <Heading size={4} caps lineHeight={1} textColor="primary">
-            wtf are 
+          <Heading size={6} caps lineHeight={1} textColor="primary">
+            javascript 
           </Heading>
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Promises?
+            Async and Promises
           </Heading>
           <Text margin="10px 0 0" textColor="medium" size={5}>
             Tech talk
@@ -65,7 +65,7 @@ export default class Presentation extends React.Component {
           <Heading size={4} fit caps lineHeight={1} textColor="secondary">
             First of all
           </Heading>
-          <Text margin="10px 0 0" textColor="medium" size={5}>
+          <Text margin="10px 0 0" textColor="clear" size={5}>
             lets take a few steps back...
           </Text>
           <Notes>
@@ -130,7 +130,7 @@ export default class Presentation extends React.Component {
               title: "now vs later",
             },
             {
-              loc: [0, 5],
+              loc: [0, 3],
               title: "now",
             },
             {
@@ -138,7 +138,7 @@ export default class Presentation extends React.Component {
               title: "now"
             },
             {
-              loc: [5, 7],
+              loc: [5, 6],
               title: "later (after 1000ms passed)",
             }
           ]}
@@ -318,16 +318,51 @@ export default class Presentation extends React.Component {
         />
         <Slide transition={["zoom"]} bgColor="primary">
           <Heading size={4} fit lineHeight={1} textColor="clear">
+            Example: React new "reconciler"
+          </Heading>
+          <Image 
+            width={"100%"}
+            src={require('./img/fiber.png')}
+          />
+          <Notes>
+          </Notes>
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
             ES6 introduces *real asynchrony*
           </Heading>
-          <Heading size={6} lineHeight={1} textColor="clear">
-            and promises
+          <Heading size={6} lineHeight={1} textColor="secondary">
+            and promises 🎉
           </Heading>
           <Appear>
             <Heading size={6} fit lineHeight={6} textColor="clear">
               let's get back to our dummy event loop
             </Heading>
           </Appear>
+          <Notes>
+          </Notes>
+        </Slide>
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            the job queue
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <Appear>
+              <ListItem>"execute this later, but as soon as you can"</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>the queue executes until it is clear</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>a job can add other jobs to the queue</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>it is not possible (yet) for a developer to interact directly with the job queue</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>explaining it with dummy code **agaaaain**</ListItem>
+            </Appear>
+          </List> 
           <Notes>
           </Notes>
         </Slide>
@@ -354,35 +389,10 @@ export default class Presentation extends React.Component {
             },
             { 
               loc: [18, 19],
-              title: "run this *then* that",
-              note: "i promise this is how it works *pun intended*"
+              title: "run this *then* that"
             },
           ]}
         />
-        <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={4} fit lineHeight={1} textColor="clear">
-            the job queue
-          </Heading>
-          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
-            <Appear>
-              <ListItem>"execute this later, but as soon as you can"</ListItem>
-            </Appear>
-            <Appear>
-              <ListItem>a job can add other jobs to the queue</ListItem>
-            </Appear>
-            <Appear>
-              <ListItem>it only exits when there are no more jobs to execute</ListItem>
-            </Appear>
-            <Appear>
-              <ListItem>it is not possible (yet) for a developer to interact directly with the job queue</ListItem>
-            </Appear>
-            <Appear>
-              <ListItem>explaining it with dummy code **agaaaain**</ListItem>
-            </Appear>
-          </List> 
-          <Notes>
-          </Notes>
-        </Slide>
         <Slide transition={["zoom"]} bgColor="primary">
           <Heading size={4} fit lineHeight={1} textColor="clear">
             callbacks, why?
@@ -429,13 +439,13 @@ export default class Presentation extends React.Component {
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             <Appear>
-              <ListItem>lack of trustability</ListItem>
-            </Appear>
-            <Appear>
               <ListItem>lack of readability</ListItem>
             </Appear>
             <Appear>
               <ListItem>lack of sequentiability</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>lack of trustability</ListItem>
             </Appear>
           </List> 
           <Notes>
