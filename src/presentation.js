@@ -109,8 +109,8 @@ export default class Presentation extends React.Component {
           </Appear>
           <Appear >
             <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
-              <ListItem>programs are executed in chunks</ListItem>
-              <ListItem>only execute one chunk at the time (run to completion)</ListItem>
+              <ListItem textSize={40}>programs are executed in chunks</ListItem>
+              <ListItem textSize={40}>only execute one chunk at the time (run to completion)</ListItem>
             </List> 
           </Appear>
           <Notes>
@@ -263,10 +263,10 @@ export default class Presentation extends React.Component {
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             <Appear>
-              <ListItem>if you have a task that executes for too long, it will block the event loop</ListItem>
+              <ListItem textSize={40}>if you have a task that executes for too long, it will block the event loop</ListItem>
             </Appear>
             <Appear>
-              <ListItem>image that one task does synchronous heavy processing</ListItem>
+              <ListItem textSize={40}>image that one task does synchronous heavy processing</ListItem>
             </Appear>
           </List> 
           <Notes>
@@ -333,15 +333,15 @@ export default class Presentation extends React.Component {
           <Heading size={4} fit lineHeight={1} textColor="clear">
             ES6 introduces *real asynchrony*
           </Heading>
-          <Heading size={6} lineHeight={1} textColor="secondary">
+          <Heading size={4} lineHeight={1} textColor="clear">
             and promises 🎉
           </Heading>
-          <Appear>
-            <Heading size={6} fit lineHeight={6} textColor="clear">
-              let's get back to our dummy event loop
-            </Heading>
-          </Appear>
           <Notes>
+            <p>
+              <p>ES6 introduces a notion of asynchrony, how? you might ask</p>
+              <p>why? because the need to have fine grained control over how the event loop executes things arised</p>
+              <p>introducing a new concept, jobs, a new queue, slightly different</p>
+            </p>
           </Notes>
         </Slide>
         <Slide transition={["zoom"]} bgColor="primary">
@@ -350,19 +350,19 @@ export default class Presentation extends React.Component {
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             <Appear>
-              <ListItem>"execute this later, but as soon as you can"</ListItem>
+              <ListItem textSize={40}>"execute this later, but as soon as you can"</ListItem>
             </Appear>
             <Appear>
-              <ListItem>the queue executes until it is clear</ListItem>
+              <ListItem textSize={40}>the queue executes synchronously until it has no more items</ListItem>
             </Appear>
             <Appear>
-              <ListItem>a job can add other jobs to the queue</ListItem>
+              <ListItem textSize={40}>a job can add other jobs to the queue</ListItem>
             </Appear>
             <Appear>
-              <ListItem>it is not possible (yet) for a developer to interact directly with the job queue</ListItem>
+              <ListItem textSize={40}>it is not possible (yet) for a developer to interact directly with the job queue</ListItem>
             </Appear>
             <Appear>
-              <ListItem>explaining it with dummy code **agaaaain**</ListItem>
+              <ListItem textSize={40}>explaining it with dummy code **agaaaain**</ListItem>
             </Appear>
           </List> 
           <Notes>
@@ -441,13 +441,13 @@ export default class Presentation extends React.Component {
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             <Appear>
-              <ListItem>lack of readability</ListItem>
+              <ListItem textSize={40}>lack of readability</ListItem>
             </Appear>
             <Appear>
-              <ListItem>lack of sequentiability</ListItem>
+              <ListItem textSize={40}>lack of sequentiability</ListItem>
             </Appear>
             <Appear>
-              <ListItem>lack of trustability</ListItem>
+              <ListItem textSize={40}>lack of trustability</ListItem>
             </Appear>
           </List> 
           <Notes>
@@ -461,19 +461,20 @@ export default class Presentation extends React.Component {
             promises
           </Heading>
           <Appear>
-            <Heading size={5} lineHeight={1} textColor="clear">
+            <Heading size={3} lineHeight={1} textColor="clear">
               finally!!
             </Heading>
           </Appear>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             <Appear>
-              <ListItem>promises are future values</ListItem>
+              <ListItem textSize={40}>promises are future values</ListItem>
             </Appear>
             <Appear>
-              <ListItem>why are they so cool? They solve the listed callbacks problems</ListItem>
+              <ListItem textSize={40}>why are they so cool? They solve the listed callbacks problems</ListItem>
             </Appear>
           </List> 
           <Notes>
+            mcDonalds cheeseburger example
           </Notes>
         </Slide>
         <CodeSlide 
@@ -509,7 +510,7 @@ export default class Presentation extends React.Component {
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             <Appear>
-              <ListItem>called too early or too late</ListItem>
+              <ListItem textSize={40}>called too early or too late</ListItem>
             </Appear>
           </List> 
           <Notes>
@@ -532,9 +533,9 @@ export default class Presentation extends React.Component {
             lack of trust
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
-            <ListItem>called too early or too late</ListItem>
+            <ListItem textSize={40}>called too early or too late</ListItem>
             <Appear>
-              <ListItem>called too few or too many times</ListItem>
+              <ListItem textSize={40}>called too few or too many times</ListItem>
             </Appear>
           </List> 
           <Notes>
@@ -557,10 +558,10 @@ export default class Presentation extends React.Component {
             lack of trust
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
-              <ListItem>called too early or too late</ListItem>
-              <ListItem>called too few or too many times</ListItem>
+              <ListItem textSize={40}>called too early or too late</ListItem>
+              <ListItem textSize={40}>called too few or too many times</ListItem>
             <Appear>
-              <ListItem>called with wrong parameters and/or context</ListItem>
+              <ListItem textSize={40}>called with wrong parameters and/or context</ListItem>
             </Appear>
           </List> 
           <Notes>
@@ -595,9 +596,9 @@ export default class Presentation extends React.Component {
             lack of trust
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
-              <ListItem>called too early or too late</ListItem>
-              <ListItem>called too few or too many times</ListItem>
-              <ListItem>called with wrong parameters and/or context</ListItem>
+              <ListItem textSize={40}>called too early or too late</ListItem>
+              <ListItem textSize={40}>called too few or too many times</ListItem>
+              <ListItem textSize={40}>called with wrong parameters and/or context</ListItem>
           </List> 
           <Notes>
           </Notes>

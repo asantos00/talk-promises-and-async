@@ -1,6 +1,6 @@
-ajax('https://bla', (err, auth) => {
-    ajax('http://blabla', (err, guest) => {
-        ajax('http://blablabla', (err, payment) => {
+ajax('https://bla', (err, foo) => {
+    ajax('http://blabla', (err, bar) => {
+        ajax('http://blablabla', (err, foo) => {
             redirectToSuccessPage()
         })
     })
