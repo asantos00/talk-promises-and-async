@@ -9,8 +9,8 @@ import {
   Slide,
   Image,
   Notes,
-  Heading,
   ListItem,
+  Heading,
   List,
   Text
 } from "spectacle";
@@ -36,17 +36,19 @@ const theme = createTheme({
 export default class Presentation extends React.Component {
   render() {
     return (
-      <Deck progress="number" transition={["zoom", "slide"]} transitionDuration={500} theme={theme}>
+      <Deck progress="number" transition={["zoom", "slide"]} transitionDuration={333} theme={theme}>
         <Slide transition={["zoom"]} bgColor="clear">
-          <Heading size={6} caps lineHeight={1} textColor="primary">
+          <Heading size={6} caps lineHeight={1} textColor="medium">
             javascript 
           </Heading>
-          <Heading size={1} fit caps lineHeight={1} textColor="secondary">
+          <Heading fit caps lineHeight={1} textColor="secondary">
             Async and Promises
           </Heading>
-          <Text margin="10px 0 0" textColor="medium" size={5}>
-            Tech talk
-          </Text>
+          <Appear>
+            <Heading margin="20 0 0 0" size={4} caps lineHeight={1} textColor="primary">
+              promises-and-async.netlify.com
+            </Heading>
+          </Appear>
           <Notes>
             <p>
               <p>Pool gave me insights about promises and generators</p>
@@ -65,7 +67,7 @@ export default class Presentation extends React.Component {
           <Heading size={4} fit caps lineHeight={1} textColor="secondary">
             First of all
           </Heading>
-          <Text margin="10px 0 0" textColor="clear" size={5}>
+          <Text margin="10px 0 0" textColor="clear" textSize={50}>
             lets take a few steps back...
           </Text>
           <Notes>
@@ -81,7 +83,7 @@ export default class Presentation extends React.Component {
           </Appear>
           <Appear order={1}>
             <Image 
-              height="300"
+              height={300}
               src="https://media3.giphy.com/media/3o6ZsW0SLwvSUm8FpK/giphy.gif"
             />
           </Appear>
@@ -150,19 +152,19 @@ export default class Presentation extends React.Component {
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             { /* TODO: brief introduction of what is the event loop */ }
             <Appear>
-              <ListItem><span role="img" aria-label="warning">⚠️ </span> javascript had no builtin asynchrony until ES6</ListItem>
+              <ListItem textSize={40}><span role="img" aria-label="warning">⚠️ </span> javascript had no builtin asynchrony until ES6</ListItem>
             </Appear>
             <Appear>
-              <ListItem>event loop has no notion of time</ListItem>
+              <ListItem textSize={40}>event loop has no notion of time</ListItem>
             </Appear>
             <Appear>
-              <ListItem>javascript runs within an hoisting environment (browser, node, ...)</ListItem>
+              <ListItem textSize={40}>javascript runs within an hoisting environment (browser, node, ...)</ListItem>
             </Appear>
             <Appear>
-              <ListItem>hoisting environment schedules code executions</ListItem>
+              <ListItem textSize={40}>hoisting environment schedules code executions</ListItem>
             </Appear>
             <Appear>
-              <ListItem>an item "in the loop" is a chunk of code</ListItem>
+              <ListItem textSize={40}>an item "in the loop" is a chunk of code</ListItem>
             </Appear>
           </List> 
           <Notes>
@@ -171,10 +173,10 @@ export default class Presentation extends React.Component {
                 javascript by itself has no asynchrony. It is not possible to say "do this in X time"
               </p>
               <p>
-                so, we used setTimeout to run something later, how does javascript has no asynchrony?
+                event loop is pretty dummy, it just executes synchronously the code chunks that appear there
               </p>
               <p>
-                event loop is pretty dummy, it just executes synchronously the code chunks that appear there
+                so, we used setTimeout to run something later, how does javascript has no asynchrony? are you lying?
               </p>
               <p>
                 until ES6, every asynchronous code that runs in javascript is triggered by the environment
@@ -193,16 +195,16 @@ export default class Presentation extends React.Component {
           </Heading>
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             <Appear>
-              <ListItem>program tries to do an ajax request, with a callback</ListItem>
+              <ListItem textSize={40}>program tries to do an ajax request, with a callback</ListItem>
             </Appear>
             <Appear>
-              <ListItem>js engine delegates the request to the environment</ListItem>
+              <ListItem textSize={40}>js engine delegates the request to the environment</ListItem>
             </Appear>
             <Appear>
-              <ListItem>when the ajax finishes, it **calls javascript back** (by inserting the callback code "in the loop")</ListItem>
+              <ListItem textSize={40}>when the ajax finishes, it **calls javascript back** (by inserting the callback code "in the loop")</ListItem>
             </Appear>
             <Appear>
-              <ListItem>as soon as the callback code "gets is chance", it executes</ListItem>
+              <ListItem textSize={40}>as soon as the callback code "gets is chance", it executes</ListItem>
             </Appear>
           </List> 
           <Notes>
