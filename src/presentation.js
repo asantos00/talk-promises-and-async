@@ -212,7 +212,7 @@ export default class Presentation extends React.Component {
           lang="js"
           transition={[]}
           textSize={25}
-          code={eventLoopExample}
+          code={require('./examples/event-loop.example')}
           ranges={[
             { loc: [0, 1], title: "dummy event loop implementation" },
             { loc: [0, 1], title: "an array of 'chunks' to execute" },
