@@ -1,0 +1,6 @@
+const authAndPay = doAuthenticatedPayment()
+
+authAndPay
+    .then(() => Logger.log('Redirected to success after payment'))
+
+authAndPay.then(redirectToHome)

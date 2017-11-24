@@ -1,0 +1,4 @@
+promisifiedAjax('https://bla')
+    .then(() => promisifiedAjax('https://blabla'))
+    .then(redirect)
+

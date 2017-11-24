@@ -47,6 +47,18 @@ export default class Presentation extends React.Component {
           <Text margin="10px 0 0" textColor="medium" size={5}>
             Tech talk
           </Text>
+          <Notes>
+            <p>
+              <p>Pool gave me insights about promises and generators</p>
+              <p>
+                Decided to explain promises but also what as happening under the wood as people
+                are already using and understand promises "out of the wood"
+              </p>
+              <p>
+                That lead me to make this talk about async and promises in javascript
+              </p>
+            </p>
+          </Notes>
         </Slide>
 
         <Slide transition={["zoom"]} bgColor="primary">
@@ -56,6 +68,9 @@ export default class Presentation extends React.Component {
           <Text margin="10px 0 0" textColor="medium" size={5}>
             lets take a few steps back...
           </Text>
+          <Notes>
+            <p>To understand what promises have changed javascript. We have to know how javascript works</p>
+          </Notes>
         </Slide>
 
         <Slide transition={["zoom"]} bgColor="primary">
@@ -70,18 +85,25 @@ export default class Presentation extends React.Component {
               src="https://media3.giphy.com/media/3o6ZsW0SLwvSUm8FpK/giphy.gif"
             />
           </Appear>
+          <Notes>
+            <p>
+              <p>People tend to be confused about how javascript handles async</p>
+              <p>What is executed now, what is executed later, people ask?</p>
+              <p>It handles... magically</p>
+            </p>
+          </Notes>
         </Slide>
 
         <Slide transition={["zoom"]} bgColor="primary">
-          <Appear >
-            <Heading size={4} fit lineHeight={1} textColor="clear">
-              what is executed now
-            </Heading>
-          </Appear>
-          <Appear >
-            <Heading size={4} fit lineHeight={1} textColor="clear">
-              what is executed later?
-            </Heading>
+          <Appear>
+            <div>
+              <Heading size={4} fit lineHeight={1} textColor="clear">
+                what is executed now
+              </Heading>
+              <Heading size={4} fit lineHeight={1} textColor="clear">
+                what is executed later?
+              </Heading>
+            </div>
           </Appear>
           <Appear >
             <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
@@ -90,32 +112,26 @@ export default class Presentation extends React.Component {
             </List> 
           </Appear>
           <Notes>
+            <p>
+              <p>To first understand this we have to understand two points</p>
+              <p>Single threaded, one thing at the time</p>
+              <p>Programs are executed in code chunks (functions)</p>
+            </p>
           </Notes>
         </Slide>
         <CodeSlide 
           lang="js"
           transition={[]}
           textSize={25}
-          code={require('./examples/ajax.example')}
-          ranges={[
-            { loc: [0, 1], title: "now" },
-            {
-              loc: [1, 4],
-              title: "later",
-              note: "yeah, it is possible to do sync ajax request. hopefully at the end at the talk you'll understand why you shouldn't"
-            }
-          ]}
-        />
-        <CodeSlide 
-          lang="js"
-          transition={[]}
-          textSize={25}
           code={require('./examples/setTimeoutNowLater.example')}
           ranges={[
-            { loc: [0, 12], title: "now vs later" },
+            { 
+              loc: [0, 12],
+              title: "now vs later",
+            },
             {
               loc: [0, 5],
-              title: "now"
+              title: "now",
             },
             {
               loc: [8, 11],
@@ -123,7 +139,7 @@ export default class Presentation extends React.Component {
             },
             {
               loc: [5, 7],
-              title: "later (after 1000ms passed)"
+              title: "later (after 1000ms passed)",
             }
           ]}
         />
@@ -134,13 +150,13 @@ export default class Presentation extends React.Component {
           <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
             { /* TODO: brief introduction of what is the event loop */ }
             <Appear>
-              <ListItem>javascript runs within an hoisting environment (browser, node, ...)</ListItem>
-            </Appear>
-            <Appear>
               <ListItem><span role="img" aria-label="warning">⚠️ </span> javascript had no builtin asynchrony until ES6</ListItem>
             </Appear>
             <Appear>
               <ListItem>event loop has no notion of time</ListItem>
+            </Appear>
+            <Appear>
+              <ListItem>javascript runs within an hoisting environment (browser, node, ...)</ListItem>
             </Appear>
             <Appear>
               <ListItem>hoisting environment schedules code executions</ListItem>
@@ -150,6 +166,25 @@ export default class Presentation extends React.Component {
             </Appear>
           </List> 
           <Notes>
+            <p>
+              <p>
+                javascript by itself has no asynchrony. It is not possible to say "do this in X time"
+              </p>
+              <p>
+                so, we used setTimeout to run something later, how does javascript has no asynchrony?
+              </p>
+              <p>
+                event loop is pretty dummy, it just executes synchronously the code chunks that appear there
+              </p>
+              <p>
+                until ES6, every asynchronous code that runs in javascript is triggered by the environment
+              </p>
+              <p>
+                how? through native APIs, onscroll, setTimeout, setInterval, filesystem, network. 
+                They're not part of the language.
+                They are native APIs. They just APIs that javascript delegates tasks
+              </p>
+            </p>
           </Notes>
         </Slide>
         <Slide transition={["zoom"]} bgColor="primary">
@@ -177,12 +212,12 @@ export default class Presentation extends React.Component {
           lang="js"
           transition={[]}
           textSize={25}
-          code={require('./examples/event-loop.example')}
+          code={eventLoopExample}
           ranges={[
             { loc: [0, 1], title: "dummy event loop implementation" },
             { loc: [0, 1], title: "an array of 'chunks' to execute" },
             { loc: [4, 5], title: "looping forever" },
-            { loc: [6, 18], title: "executing tasks" },
+            { loc: [6, 15], title: "executing tasks" },
           ]}
         />
         <CodeSlide 
@@ -220,24 +255,6 @@ export default class Presentation extends React.Component {
             },
           ]}
         />
-        <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={4} fit lineHeight={1} textColor="clear">
-            async !== parallel
-          </Heading>
-          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
-            <Appear>
-              <ListItem>javascripts is fully asynchronous. But the event loop executes one thing at the time</ListItem>
-            </Appear>
-            <Appear>
-              <ListItem>async is the gap between now and later</ListItem>
-            </Appear>
-            <Appear>
-              <ListItem>parallel is executing more than one thing at the same time</ListItem>
-            </Appear>
-          </List> 
-          <Notes>
-          </Notes>
-        </Slide>
         <Slide transition={["zoom"]} bgColor="primary">
           <Heading size={4} fit lineHeight={1} textColor="clear">
             blocking the event loop
@@ -366,51 +383,6 @@ export default class Presentation extends React.Component {
           <Notes>
           </Notes>
         </Slide>
-        <CodeSlide 
-          lang="js"
-          transition={[]}
-          textSize={25}
-          code={require('./examples/schedule.example')}
-          ranges={[
-            { 
-              loc: [0, 1],
-              title: "chunk of code, added to the loop",
-            },
-            { 
-              loc: [2, 5],
-              title: "*add to the end of the loop*",
-            },
-            { 
-              loc: [7, 14],
-              title: "fake schedule (emulate job queue)"
-            },
-            { 
-              loc: [7, 14],
-              title: "how does this runs?",
-            },
-            { 
-              loc: [0, 1],
-              title: "the first thing is",
-            },
-            { 
-              loc: [7, 10],
-              title: "after a tick, runs the job queue",
-            },
-            { 
-              loc: [10, 13],
-              title: "job schedules job ",
-              note: "jobQueue only exits after running all jobs"
-            },
-            { 
-              loc: [2, 5],
-              title: "runs the next item on the loop",
-            },
-            { 
-              loc: [2, 5],
-              title: "ACDB is printed",
-            }
-          ]}
-        />
         <Slide transition={["zoom"]} bgColor="primary">
           <Heading size={4} fit lineHeight={1} textColor="clear">
             callbacks, why?
@@ -466,11 +438,6 @@ export default class Presentation extends React.Component {
               <ListItem>lack of sequentiability</ListItem>
             </Appear>
           </List> 
-          <Appear>
-            <Heading size={4} fit lineHeight={1} textColor="clear">
-              - being callbacks :troll:
-            </Heading>
-          </Appear>
           <Notes>
           </Notes>
         </Slide>
@@ -491,36 +458,9 @@ export default class Presentation extends React.Component {
               <ListItem>promises are future values</ListItem>
             </Appear>
             <Appear>
-              <ListItem>their API is so intuitive it makes some people use them without understanding</ListItem>
-            </Appear>
-            <Appear>
               <ListItem>why are they so cool? They solve the listed callbacks problems</ListItem>
             </Appear>
           </List> 
-          <Notes>
-          </Notes>
-        </Slide>
-        <Slide transition={["zoom"]} bgColor="primary">
-          <Appear>
-            <Heading size={5} lineHeight={1} textColor="clear">
-              no shit sherlock...
-            </Heading>
-          </Appear>
-          <Appear>
-            <Heading size={4} fit lineHeight={1} textColor="clear">
-              i know what promises are
-            </Heading>
-          </Appear>
-          <Appear>
-            <Heading size={5} lineHeight={1} textColor="clear">
-              tell me something usefull
-            </Heading>
-          </Appear>
-          <Appear>
-            <Heading size={5} fit lineHeight={1} textColor="clear">
-              let's cooooode again
-            </Heading>
-          </Appear>
           <Notes>
           </Notes>
         </Slide>
@@ -545,7 +485,7 @@ export default class Presentation extends React.Component {
           ]}
         />
         <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={4} lineHeight={1} textColor="clear">
+          <Heading size={2} fit lineHeight={1} textColor="clear">
             what about the other problems?
           </Heading>
           <Notes>
@@ -559,15 +499,136 @@ export default class Presentation extends React.Component {
             <Appear>
               <ListItem>called too early or too late</ListItem>
             </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/promises/sync-async-values.example')}
+          ranges={[
+            { 
+              loc: [0, 5],
+              title: "always execute asynchronously",
+            }
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            lack of trust
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+            <ListItem>called too early or too late</ListItem>
             <Appear>
               <ListItem>called too few or too many times</ListItem>
             </Appear>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/promises/explicit-sequential-events.example')}
+          ranges={[
+            { 
+              loc: [0, 4],
+              title: "promise only resolves/rejects once",
+            }
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            lack of trust
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+              <ListItem>called too early or too late</ListItem>
+              <ListItem>called too few or too many times</ListItem>
             <Appear>
               <ListItem>called with wrong parameters and/or context</ListItem>
             </Appear>
           </List> 
           <Notes>
           </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/promises/wrong-parameters.example')}
+          ranges={[
+            { 
+              loc: [0, 6],
+              title: "only have 1 callback argument",
+            }
+          ]}
+        />
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/promises/error.example')}
+          ranges={[
+            { 
+              loc: [0, 4],
+              title: "error handling",
+            }
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            lack of trust
+          </Heading>
+          <List textColor="clear" textSize={40} margin="20 0 0 0" start={1} type="A">
+              <ListItem>called too early or too late</ListItem>
+              <ListItem>called too few or too many times</ListItem>
+              <ListItem>called with wrong parameters and/or context</ListItem>
+          </List> 
+          <Notes>
+          </Notes>
+        </Slide>
+        <CodeSlide 
+          lang="js"
+          transition={[]}
+          textSize={25}
+          code={require('./examples/promisifying.example')}
+          ranges={[
+            { 
+              loc: [0, 0],
+              title: "promisifying a callbacked function",
+            },
+            { 
+              loc: [0, 4],
+              title: "a function with callback",
+            },
+            { 
+              loc: [4, 5],
+              title: "define a function",
+            },
+            { 
+              loc: [5, 6],
+              title: "that returns a promise",
+            },
+            { 
+              loc: [6, 13],
+              title: "that returns a promise",
+            },
+            { 
+              loc: [16, 23],
+              title: "usage",
+            }
+          ]}
+        />
+        <Slide transition={["zoom"]} bgColor="primary">
+          <Heading size={4} fit lineHeight={1} textColor="clear">
+            thank you!
+          </Heading>
+          <Heading size={3} lineHeight={1} textColor="clear">
+            questions
+          </Heading>
         </Slide>
       </Deck>
     );
