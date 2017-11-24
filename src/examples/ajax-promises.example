@@ -9,7 +9,7 @@ ajax('https://bla', (err, auth) => {
 
 
 
-promisifiedAjax('https://bla')
-    .then((auth) => promisifiedAjax('https://bla'))
-    .then((guest) => promisifiedAjax('https://blabla'))
-    .then((payment) => promisifiedAjax('https://blablabla'))
+ajaxj('https://bla')
+    .then((auth) => ajax('https://bla'))
+    .then((guest) => ajax('https://blabla'))
+    .then((payment) => ajax('https://blablabla'))
