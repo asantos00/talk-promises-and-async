@@ -1,0 +1,3 @@
+getUserCard
+  .then((userCard) => authorize(userCard))
+  .then((authorization) => pay(authorization))

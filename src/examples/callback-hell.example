@@ -1,0 +1,7 @@
+ajax('https://bla', (err, foo) => {
+    ajax('http://blabla', (err, bar) => {
+        ajax('http://blablabla', (err, foo) => {
+            redirectToSuccessPage()
+        })
+    })
+})

@@ -1,0 +1,11 @@
+var number
+
+function now() { return 10 }
+
+function later() {
+  number =  number * 2
+}
+
+number = now()
+
+setTimeout(later, 1000)

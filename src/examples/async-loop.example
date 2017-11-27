@@ -1,0 +1,13 @@
+let processedPosts = []
+
+function process(posts) => {
+  const chunk = posts.splice(0, 1000)
+
+  processedPosts = processedPosts.concat(
+    chunk.map(post => post.timestamp = moment(posts.timestamp).add(1, 'day'))
+  )
+
+  if (posts.length) {
+    setTimeout(process(posts), 0)
+  }
+}

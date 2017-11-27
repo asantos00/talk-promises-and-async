@@ -1,0 +1,4 @@
+getUserCard
+  .then((userCard) => authorize(userCard))
+  .then((authorization) => pay(authorization))
+  .catch((error) => Logger.error('error in auth or payment'))
